@@ -8,18 +8,18 @@ services:
       - "3306:3306"
     restart: always
     volumes:
-      - D:\NGUYENHOANGHAI\Docker\mysql\mysql_8.0.33:/var/lib/mysql
+      - D:\mysql\mysql_8.0.33:/var/lib/mysql
     networks:
       backend:
     environment:
-      MYSQL_USER: hainh
+      MYSQL_USER: hopbt
       MYSQL_PASSWORD: Admin123
       MYSQL_ROOT_PASSWORD: Admin123
-      MYSQL_DATABASE: testdata
+      MYSQL_DATABASE: db-ecommerce
 
 ## discovery-service config
   discovery-service:
-    image: nhh0507/discovery-service:v1.0.0
+    image: bachhop/discovery-service:v1.0.0
     container_name: discovery-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -30,7 +30,7 @@ services:
 
 ## gateway-service config
   gateway-service:
-    image: nhh0507/gateway-service:v1.0.0
+    image: bachhop/gateway-service:v1.0.0
     container_name: gateway-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -44,12 +44,12 @@ services:
 
 ## identity-service config
   identity-service:
-    image: nhh0507/identity-service:v1.0.0
+    image: bachhop/identity-service:v1.0.0
     container_name: identity-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - eureka_client_service-url_defaultZone=http://discovery-service:8761/eureka
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-microservice:3306/testdata
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-microservice:3306/db-ecommerce
     ports:
       - "9006:9006"
     networks:
@@ -61,12 +61,12 @@ services:
 
 ## identity-service config
   inventory-service:
-    image: nhh0507/inventory-service:v1.0.0
+    image: bachhop/inventory-service:v1.0.0
     container_name: inventory-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - eureka_client_service-url_defaultZone=http://discovery-service:8761/eureka
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-microservice:3306/testdata
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-microservice:3306/db-ecommerce
     ports:
       - "9003:9003"
     networks:
@@ -78,12 +78,12 @@ services:
 
 ## product-service config
   product-service:
-    image: nhh0507/product-service:v1.0.0
+    image: bachhop/product-service:v1.0.0
     container_name: product-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - eureka_client_service-url_defaultZone=http://discovery-service:8761/eureka
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-microservice:3306/testdata
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-microservice:3306/db-ecommerce
     ports:
       - "9001:9001"
     networks:
@@ -95,12 +95,12 @@ services:
 
 ## order-service config
   order-service:
-    image: nhh0507/order-service:v1.0.0
+    image: bachhop/order-service:v1.0.0
     container_name: order-service
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - eureka_client_service-url_defaultZone=http://discovery-service:8761/eureka
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-microservice:3306/testdata
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-microservice:3306/db-ecommerce
     ports:
       - "9002:9002"
     networks:
