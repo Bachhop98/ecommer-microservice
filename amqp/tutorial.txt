@@ -1,0 +1,6 @@
+Huong dan chay kafka tren docker:
+chạy docker-compose: docker-compose up -d
+Tạo topic ten mytopic : docker exec broker kafka-topics --bootstrap-server broker:9092 --create --topic mytopic
+Kiem tra co bao nhieu topic tren broker: docker exec broker kafka-topics --bootstrap-server broker:9092 --list
+goi topic trên producer: docker exec --interactive --tty broker kafka-console-producer --bootstrap-server broker:9092 --topic mytopic
+goi topic tren consumer:docker exec --interactive --tty broker kafka-console-consumer --bootstrap-server broker:9092 --topic mytopic --from-beginning
